@@ -42,7 +42,8 @@ namespace SegundoParcialBilleteraVirtual.Windows
 
         private void frmBilleteraVirtual_Load(object sender, EventArgs e)
         {
-            GridHelper.MostrarDatosEnGrilla<Moneda>(billeteras!, billeteras.ToString());
+
+            //GridHelper.MostrarDatosEnGrilla<Moneda>(billeteras!, billeteras.ToString());
         }
 
         private void btnComprarDivisas_Click(object sender, EventArgs e)
@@ -51,7 +52,7 @@ namespace SegundoParcialBilleteraVirtual.Windows
 
         private void btnMovimientos_Click(object sender, EventArgs e)
         {
-            frmMovimientos frm = new frmMovimientos();
+
         }
 
         private void btnUltimosMovimientos_Click(object sender, EventArgs e)
