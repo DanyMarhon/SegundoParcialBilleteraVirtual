@@ -25,11 +25,10 @@ namespace SegundoParcialBilleteraVirtual.Windows
         {
             using (var frmDeposito = new frmDeposito())
             {
-                frmDeposito.ShowDialog(); // Muestra el formulario de depósito como un diálogo modal
+                frmDeposito.ShowDialog();
 
                 if (frmDeposito.Confirmado)
                 {
-                    // Crea un objeto Moneda con los datos ingresados
                     Moneda moneda = null;
 
                     switch (frmDeposito.MonedaSeleccionada)
@@ -50,10 +49,10 @@ namespace SegundoParcialBilleteraVirtual.Windows
 
                     if (moneda != null)
                     {
-                        billetera.Deposito(moneda); // Llama al método Depósito en la billetera
+                        billetera.Deposito(moneda);
                         MessageBox.Show($"Se depositaron {frmDeposito.Cantidad} {frmDeposito.MonedaSeleccionada}.", "Depósito Exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         var monedas = billetera.MostrarContenido();
-                        GridHelper.MostrarDatosEnGrilla(monedas, dgvDatos); // Método para refrescar la grilla
+                        GridHelper.MostrarDatosEnGrilla(monedas, dgvDatos);
                     }
                 }
             }
@@ -61,7 +60,39 @@ namespace SegundoParcialBilleteraVirtual.Windows
 
         private void btnExtraccion_Click(object sender, EventArgs e)
         {
+            using (var frmRetiro = new frmRetiro())
+            {
+                frmRetiro.ShowDialog();
 
+                if (frmRetiro.Confirmado)
+                {
+                    Moneda moneda = null;
+
+                    switch (frmRetiro.MonedaSeleccionada)
+                    {
+                        case "ARS":
+                            moneda = new MonedaARS(frmRetiro.Cantidad);
+                            break;
+                        case "USD":
+                            moneda = new MonedaUSD(frmRetiro.Cantidad);
+                            break;
+                        case "EUR":
+                            moneda = new MonedaEUR(frmRetiro.Cantidad);
+                            break;
+                        case "CNY":
+                            moneda = new MonedaCNY(frmRetiro.Cantidad);
+                            break;
+                    }
+
+                    if (moneda != null)
+                    {
+                        billetera.Retiro(moneda);
+                        MessageBox.Show($"Se retiró {frmRetiro.Cantidad} {frmRetiro.MonedaSeleccionada}.", "Retiro Exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        var monedas = billetera.MostrarContenido();
+                        GridHelper.MostrarDatosEnGrilla(monedas, dgvDatos);
+                    }
+                }
+            }
         }
 
         private void btnPagar_Click(object sender, EventArgs e)
