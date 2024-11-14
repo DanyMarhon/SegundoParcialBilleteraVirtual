@@ -7,8 +7,14 @@
 
         public MonedaCNY(decimal cantidad) : base("ARS", "Y", cantidad) { }
 
+        public MonedaCNY() : base()
+        {
+
+        }
         public override decimal ConvertirA(Type tipoMoneda)
         {
+            if (tipoMoneda == typeof(MonedaCNY))
+                return Cantidad;
             if (tipoMoneda == typeof(MonedaUSD))
                 return Cantidad * UsdRate;
             if (tipoMoneda == typeof(MonedaARS))

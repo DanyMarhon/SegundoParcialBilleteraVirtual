@@ -14,8 +14,14 @@ namespace SegundoParcialBilleteraVirtual.Entidades
 
         public MonedaUSD(decimal cantidad) : base("USD", "$", cantidad) { }
 
+        public MonedaUSD() : base()
+        {
+
+        }
         public override decimal ConvertirA(Type tipoMoneda)
         {
+            if (tipoMoneda == typeof(MonedaUSD))
+                return Cantidad;
             if (tipoMoneda == typeof(MonedaARS))
                 return Cantidad * ArsRate;
             if (tipoMoneda == typeof(MonedaEUR))

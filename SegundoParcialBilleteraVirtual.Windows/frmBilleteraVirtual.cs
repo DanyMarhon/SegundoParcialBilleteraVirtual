@@ -11,6 +11,7 @@ namespace SegundoParcialBilleteraVirtual.Windows
         public frmBilleteraVirtual()
         {
             InitializeComponent();
+            billetera = new Billetera();
         }
 
 
@@ -42,8 +43,10 @@ namespace SegundoParcialBilleteraVirtual.Windows
 
         private void frmBilleteraVirtual_Load(object sender, EventArgs e)
         {
+            billetera.RecuperarDatos();
 
-            //GridHelper.MostrarDatosEnGrilla<Moneda>(billeteras!, billeteras.ToString());
+            var monedas = billetera.MostrarContenido();
+            GridHelper.MostrarDatosEnGrilla(monedas, dgvDatos);
         }
 
         private void btnComprarDivisas_Click(object sender, EventArgs e)

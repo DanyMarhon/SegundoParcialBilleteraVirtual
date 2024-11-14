@@ -52,7 +52,7 @@ namespace SegundoParcialBilleteraVirtual.Entidades
             }
         }
 
-        protected Moneda() { }
+        public Moneda() { }
 
         protected Moneda(string codigo, string simbolo, decimal cantidad)
         {

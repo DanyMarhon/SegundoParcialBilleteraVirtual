@@ -14,8 +14,14 @@ namespace SegundoParcialBilleteraVirtual.Entidades
 
         public MonedaARS(decimal cantidad) : base("ARS", "$", cantidad) { }
 
+        public MonedaARS() : base()
+        {
+            
+        }
         public override decimal ConvertirA(Type tipoMoneda)
         {
+            if (tipoMoneda == typeof(MonedaARS))
+                return Cantidad;
             if (tipoMoneda == typeof(MonedaUSD))
                 return Cantidad * UsdRate;
             if (tipoMoneda == typeof(MonedaEUR))
@@ -23,7 +29,7 @@ namespace SegundoParcialBilleteraVirtual.Entidades
             if (tipoMoneda == typeof(MonedaCNY))
                 return Cantidad * CnyRate;
 
-            throw new InvalidOperationException("Tipo de moneda no soportado.");
+            throw new InvalidOperationException($"Tipo de moneda no soportado: {tipoMoneda.Name}");
         }
     }
 }
