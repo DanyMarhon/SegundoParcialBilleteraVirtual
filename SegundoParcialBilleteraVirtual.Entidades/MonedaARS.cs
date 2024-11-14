@@ -20,7 +20,7 @@ namespace SegundoParcialBilleteraVirtual.Entidades
         }
         public override decimal ConvertirA(Type tipoMoneda)
         {
-            if (tipoMoneda == typeof(MonedaARS))
+            if (tipoMoneda == typeof(MonedaARS)) // Le puse la conversion 1 a 1 porque no lo pude hacer de otra forma
                 return Cantidad;
             if (tipoMoneda == typeof(MonedaUSD))
                 return Cantidad * UsdRate;

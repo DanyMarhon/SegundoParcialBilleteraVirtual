@@ -1,6 +1,7 @@
 using SegundoParcialBilleteraVirtual.Datos;
 using SegundoParcialBilleteraVirtual.Entidades;
 using SegundoParcialBilleteraVirtual.Windows.Helpers;
+using System.Drawing;
 
 namespace SegundoParcialBilleteraVirtual.Windows
 {
@@ -14,12 +15,6 @@ namespace SegundoParcialBilleteraVirtual.Windows
             billetera = new Billetera();
         }
 
-
-        Moneda monedaAr = new MonedaARS(500);
-        Moneda monedaUs = new MonedaUSD(500);
-        Moneda monedaYn = new MonedaCNY(500);
-        Moneda monedaEu = new MonedaEUR(500);
-
         private void btnSalir_Click(object sender, EventArgs e)
         {
             billetera!.GuardarDatos();
@@ -28,7 +23,40 @@ namespace SegundoParcialBilleteraVirtual.Windows
 
         private void btnDeposito_Click(object sender, EventArgs e)
         {
-            
+            using (var frmDeposito = new frmDeposito())
+            {
+                frmDeposito.ShowDialog(); // Muestra el formulario de depósito como un diálogo modal
+
+                if (frmDeposito.Confirmado)
+                {
+                    // Crea un objeto Moneda con los datos ingresados
+                    Moneda moneda = null;
+
+                    switch (frmDeposito.MonedaSeleccionada)
+                    {
+                        case "ARS":
+                            moneda = new MonedaARS(frmDeposito.Cantidad);
+                            break;
+                        case "USD":
+                            moneda = new MonedaUSD(frmDeposito.Cantidad);
+                            break;
+                        case "EUR":
+                            moneda = new MonedaEUR(frmDeposito.Cantidad);
+                            break;
+                        case "CNY":
+                            moneda = new MonedaCNY(frmDeposito.Cantidad);
+                            break;
+                    }
+
+                    if (moneda != null)
+                    {
+                        billetera.Deposito(moneda); // Llama al método Depósito en la billetera
+                        MessageBox.Show($"Se depositaron {frmDeposito.Cantidad} {frmDeposito.MonedaSeleccionada}.", "Depósito Exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        var monedas = billetera.MostrarContenido();
+                        GridHelper.MostrarDatosEnGrilla(monedas, dgvDatos); // Método para refrescar la grilla
+                    }
+                }
+            }
         }
 
         private void btnExtraccion_Click(object sender, EventArgs e)

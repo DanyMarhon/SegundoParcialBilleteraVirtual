@@ -5,7 +5,7 @@
         private const decimal UsdRate = 7.1m;
         private const decimal ArsRate = 50m;
 
-        public MonedaCNY(decimal cantidad) : base("ARS", "Y", cantidad) { }
+        public MonedaCNY(decimal cantidad) : base("CNY", "Y", cantidad) { }
 
         public MonedaCNY() : base()
         {
